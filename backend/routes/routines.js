@@ -1,37 +1,27 @@
 const express = require('express')
-const Routine = require('../models/routineSchema')
+
+const {
+  getRoutines,
+  getRoutine,
+  createRoutine,
+  deleteRoutine,
+  updateRoutine
+} = require('../controllers/routineControllers')
 
 const router = express.Router()
 
-router.get('/', (req, res) => {
-    res.json({mssg: 'Get all routines'})
-})
+router.get('/', getRoutines)
 
 // GET a single routine
-router.get('/:id', (req, res) => {
-  res.json({mssg: 'GET a single routine'})
-})
+router.get('/:id', getRoutine)
 
 // POST a new routine
-router.post('/', async (req, res) => {
-    const { title, product, time} = req.body
-
-    try{
-        const routine = await Routine.create({title, product, time})
-        res.status(200).json(routine)
-    }catch(error){
-        res.status(400).json({error: error.message})
-    }
-})
+router.post('/', createRoutine)
 
 // DELETE a routine
-router.delete('/:id', (req, res) => {
-  res.json({mssg: 'DELETE a routine'})
-})
+router.delete('/:id', deleteRoutine)
 
 // UPDATE a routine
-router.patch('/:id', (req, res) => {
-  res.json({mssg: 'UPDATE a routine'})
-})
+router.patch('/:id', updateRoutine)
 
 module.exports = router
