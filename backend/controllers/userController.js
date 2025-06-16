@@ -1,0 +1,14 @@
+//login user
+const loginUser = async(req, res) => {
+    res.json({msssg: 'login user'})
+}
+
+// signup user
+const signupUser = async(req, res) => {
+    res.json({msssg: 'signup user'})
+}
+
+module.exports = {
+    loginUser, 
+    signupUser
+}
