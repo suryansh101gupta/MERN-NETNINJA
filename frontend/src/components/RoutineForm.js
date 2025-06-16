@@ -1,10 +1,14 @@
 import { useState } from 'react'
+import { useRoutineContext } from '../hooks/useRoutinesContext'
+
 
 const RoutineForm = () => {
+  const {dispatch} = useRoutineContext()
   const [title, setTitle] = useState('')
   const [product, setProduct] = useState('')
   const [time, setTime] = useState('')
   const [error, setError] = useState(null)
+  const [emptyFields, setEmptyFields] = useState([])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -22,13 +26,16 @@ const RoutineForm = () => {
 
     if (!response.ok) {
       setError(json.error)
+      setEmptyFields(json.emptyFields)
     }
     if (response.ok) {
       setError(null)
       setTitle('')
       setProduct('')
       setTime('')
+      setEmptyFields([])
       console.log('new Routine added:', json)
+      dispatch({type:'CREATE_ROUTINE', payload: json})
     }
 
   }
@@ -42,6 +49,7 @@ const RoutineForm = () => {
         type="text" 
         onChange={(e) => setTitle(e.target.value)} 
         value={title}
+        className={emptyFields.includes('title') ? 'error' : ''}
       />
 
       <label>Product :</label>
@@ -49,6 +57,7 @@ const RoutineForm = () => {
         type="text" 
         onChange={(e) => setProduct(e.target.value)} 
         value={product}
+        className={emptyFields.includes('product') ? 'error' : ''}
       />
 
       <label>Time (in mins):</label>

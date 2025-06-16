@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
+import { useRoutineContext } from "../hooks/useRoutinesContext"
 
 // components
 import RoutineDetails from '../components/RoutineDetails'
 import RoutineForm from "../components/RoutineForm"
 
 const Home = () => {
-    const [routines, setRoutines] = useState(null)
+    // const [routines, setRoutines] = useState(null)
+    const {routines, dispatch} = useRoutineContext()
 
     useEffect(() => {
         const fetchRoutines = async () => {
@@ -13,12 +15,13 @@ const Home = () => {
             const json = await response.json()
 
             if(response.ok){
-                setRoutines(json)
+                // setRoutines(json)
+                dispatch({type: 'SET_ROUTINE', payload: json})
             }
         }
 
         fetchRoutines()
-    }, [])
+    }, [dispatch])
 
     return(
         <div className="home">
