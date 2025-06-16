@@ -8,6 +8,6 @@ const router = express.Router()
 router.post('/login', loginUser)
 
 // signup route
-router.post('/login', signupUser)
+router.post('/signup', signupUser)
 
 module.exports = router
