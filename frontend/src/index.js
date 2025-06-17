@@ -3,14 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { RoutineContextProvider } from './context/RoutineContext';
+import { AuthContextProvider } from './context/AuthContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RoutineContextProvider>
-      <App />
-    </RoutineContextProvider>
+    <AuthContextProvider>
+      <RoutineContextProvider>
+        <App />
+      </RoutineContextProvider>
+    </AuthContextProvider>
   </React.StrictMode>
 );
 

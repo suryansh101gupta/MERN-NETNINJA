@@ -5,7 +5,7 @@ export const useRoutineContext = () => {
     const context = useContext(RoutineContext)
 
     if(!context){
-        throw Error('useRoutineContext must be used inside a routineContextProvider')
+        throw Error('useRoutineContext must be used inside a RoutineContextProvider')
     }
 
     return context
