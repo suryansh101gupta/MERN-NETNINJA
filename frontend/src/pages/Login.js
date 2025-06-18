@@ -10,7 +10,7 @@ const Login = () => {
     }
 
     return (
-        <form className="signup" onsubmit={handleSubmit}>
+        <form className="signup" onSubmit={handleSubmit}>
             <h3>Login</h3>
 
             <label>Email: </label>
@@ -31,4 +31,5 @@ const Login = () => {
         </form>
     )
 }
+
 export default Login
