@@ -1,6 +1,8 @@
 import { useAuthContext } from "./useAuthContext"
+import { useRoutineContext } from "./useRoutinesContext"
 
 export const useLogout = () => {
+    const {dispatch: routinesDispatch} = useRoutineContext()
     const {dispatch} = useAuthContext()
 
     const logout = () => {
@@ -9,6 +11,7 @@ export const useLogout = () => {
 
         // dispatch logout action
         dispatch({type: 'LOGOUT'})
+        routinesDispatch({type: 'SET_ROUTINE', payload: null})
     }
 
     return {logout}

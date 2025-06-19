@@ -5,7 +5,8 @@ const mongoose = require('mongoose')
 
 // get all routine
 const getRoutines = async(req, res) => {
-    const routines = await Routine.find({}).sort({createdAt: -1})
+    const user_id = req.user._id
+    const routines = await Routine.find({ user_id }).sort({createdAt: -1})
 
     res.status(200).json(routines)
 }
@@ -49,7 +50,8 @@ const createRoutine = async(req,res) => {
 
     // add doc to db
     try{
-        const routine = await Routine.create({title, product, time})
+        const user_id = req.user._id
+        const routine = await Routine.create({title, product, time, user_id})
         res.status(200).json(routine)
     }catch(error){
         res.status(400).json({error: error.message})
