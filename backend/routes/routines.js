@@ -8,7 +8,11 @@ const {
   updateRoutine
 } = require('../controllers/routineControllers')
 
+const requireAuth = require('../middleware/requireAuth')
+
 const router = express.Router()
+
+router.use(requireAuth)
 
 router.get('/', getRoutines)
 
