@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { useRoutineContext } from '../hooks/useRoutinesContext'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 
 const RoutineForm = () => {
-  const {dispatch} = useRoutineContext()
+  const { dispatch } = useRoutineContext()
+  const { user } = useAuthContext()
+
   const [title, setTitle] = useState('')
   const [product, setProduct] = useState('')
   const [time, setTime] = useState('')
@@ -13,13 +16,19 @@ const RoutineForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    if(!user){
+      setError('you must be logged in')
+      return
+    }
+
     const Routine = {title, product, time}
     
     const response = await fetch('/api/routines', {
       method: 'POST',
       body: JSON.stringify(Routine),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.token}`
       }
     })
     const json = await response.json()
