@@ -1,12 +1,21 @@
 import { useRoutineContext } from "../hooks/useRoutinesContext"
 import formatDistanceToNow from'date-fns/formatDistanceToNow'
+import { useAuthContext } from "../hooks/useAuthContext"
 
 const RoutineDetails = ({ routine }) => {
-  const {dispatch} = useRoutineContext()
+  const { dispatch } = useRoutineContext()
+  const { user } = useAuthContext()
 
   const handleClick = async () => {
-    const response = await fetch('/api/routines/' + routine._id, 
-      { method: 'DELETE' }
+    if(!user){
+      return
+    }
+    const response = await fetch('/api/routines/' + routine._id, {
+       method: 'DELETE',
+       headers: {
+        'Authorization': `Bearer ${user.token}`
+       }
+      }
     )
     const json = await response.json()
 
